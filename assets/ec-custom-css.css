@@ -131,7 +131,7 @@ button {
   .ec_header--cta, .ec_header--message {
     display: none;
   }
-  ec__header-- {
+  .ec_header--content {
     justify-content: center;
     position: relative
   }
@@ -163,5 +163,26 @@ button {
 }
 .ec_banner--description {
   font-size: 20px;
+}
+.ec_banner--content {
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 60px;
+   }
+@media (width <= 460px) {
+  .ec_banner .ec_banner--content {
+    width: 100%;
+    text-align: center;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+  }
+  .ec_banner--content .btn {
+    margin-top: auto;
+  }
+  .ec_banner--title  {
+    font-size: 30px;
+  }
 }
 /* ec custom banner end */
