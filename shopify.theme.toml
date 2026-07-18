@@ -1,0 +1,4 @@
+[environments.development]
+store = "md-ashikur-rahman-48-teststore.myshopify.com"
+theme = "185108922479"
+password = "mdashikurrahman123"
