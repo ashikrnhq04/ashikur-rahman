@@ -26,6 +26,7 @@ button {
 .btn svg {
   max-width: 25px;
   flex-shrink: 0;
+  transition: all 500ms;
 }
 .btn-secondary {
   background: #fff544;
@@ -48,6 +49,7 @@ button {
 }
 .btn-secondary:hover svg {
   stroke: #fff;
+  fill: #fff;
 }
 .btn-secondary .btn--text, .btn-secondary svg {
   position: relative;
