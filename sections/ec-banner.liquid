@@ -1,0 +1,186 @@
+{% liquid
+  assign settings = section.settings
+
+  assign justify_content = ''
+  assign align_items = ''
+
+  case settings.content_position
+    when 'top-left'
+      assign align_items = 'flex-start'
+      assign justify_content = 'flex-start'
+
+    when 'top-right'
+      assign align_items = 'flex-start'
+      assign justify_content = 'flex-end'
+
+    when 'bottom-right'
+      assign align_items = 'flex-end'
+      assign justify_content = 'flex-end'
+
+    else
+      assign align_items = 'flex-end'
+      assign justify_content = 'flex-start'
+  endcase
+%}
+
+{{ 'ec-custom-css.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .ec_banner .container {
+    font-family: 'Jost', sans-serif;
+    height: 100dvh;
+    display: flex;
+    align-items: {{ align_items }};
+    justify-content: {{ justify_content }};
+    padding-block: 40px;
+  }
+  .ec_banner--content {
+    width: {{ settings.content_width }}px;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 60px;
+   }
+</style>
+<section class="ec_banner" id="ec-banner-{{ section.id }}">
+  <div class="ec_banner--image">
+    {% if settings.banner_bg != blank %}
+      {{ settings.banner_bg | image_url: width: 1200 | image_tag: class: 'ec_banner--background' }}
+    {% else %}
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'ec_banner--background' }}
+    {% endif %}
+  </div>
+  {% if section.blocks.size > 0 %}
+    <div class="container page-width">
+      <div class="ec_banner--content">
+        {% for block in section.blocks %}
+          {% if block.type == 'banner_title' %}
+            <h2 class="ec_banner--title">{{ block.settings.title }}</h2>
+          {% endif %}
+          {% if block.type == 'banner_description' %}
+            <div class="ec_banner--description">
+              {{ block.settings.description }}
+            </div>
+          {% endif %}
+          {% if block.type == 'banner_cta' %}
+            <a
+              href="{{ block.settings.url }}"
+              class="btn {% if block.settings.cta_type == 'primary' %}btn-primary{% else %}btn-secondary{% endif %}"
+            >
+              <span class="btn--text"> {{ block.settings.text }} </span>
+              {% if block.settings.cta_icon != blank %}
+                {{ block.settings.cta_icon }}
+              {% endif %}
+            </a>
+          {% endif %}
+        {%- endfor %}
+      </div>
+    </div>
+  {%- endif %}
+</section>
+
+{% schema %}
+{
+  "name": "EC Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_bg",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Box Width",
+      "min": 400,
+      "max": 800,
+      "default": 400,
+      "step": 100
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content Position",
+      "options": [
+        { "label": "Top Left", "value": "top-left" },
+        { "label": "Top Right", "value": "top-right" },
+        { "label": "Bottom Right", "value": "bottom-right" },
+        { "label": "Bottom Left", "value": "bottom-left" }
+      ],
+      "default": "bottom-left"
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "banner_title",
+      "name": "Banner Title",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "The Gift Guide"
+        }
+      ]
+    },
+    {
+      "type": "banner_description",
+      "name": "Banner Description",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>"
+        }
+      ]
+    },
+    {
+      "type": "banner_cta",
+      "name": "Banner CTA",
+      "settings": [
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL",
+          "default": "/collections"
+        },
+        {
+          "type": "textarea",
+          "id": "cta_icon",
+          "label": "Icon",
+          "info": "Paste SVG code here"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "shop now"
+        },
+        {
+          "type": "select",
+          "id": "cta_type",
+          "label": "Button Type",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EC Banner",
+      "blocks": [{ "type": "banner_title" }, { "type": "banner_description" }, { "type": "banner_cta" }]
+    }
+  ]
+}
+{% endschema %}

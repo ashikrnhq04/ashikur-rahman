@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     margin: 0;
     padding:0;
+}
+
+:root {
+  --primary-btn-bg: #000;
+  --secondary-btn-bg: #fff544;
+
 }
 button {
   background: none;
@@ -11,27 +19,61 @@ button {
 }
 
 .btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   padding: 10px 30px;
   border: none;
   text-decoration: none;
+  font-size: 16px;
   color: #000000;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
+  position: relative;
+  transition: all 500ms;
 }
 .btn svg {
   max-width: 25px;
   flex-shrink: 0;
   transition: all 500ms;
 }
-.btn-secondary {
-  background: #fff544;
-  position: relative;
+.btn-primary {
+  background: var(--primary-btn-bg);
+  color: #fff; 
+}
+.btn-primary svg {
+  stroke: #fff; 
+  fill:#fff;
+}
+.btn-primary::before {
+  position: absolute;
   transition: all 500ms;
+  content:  "";
+  inset: 0;
+  transform: translateX(-100%);
+  opacity: 0; 
+  background: var(--secondary-btn-bg);
+  z-index: 0;
+}
+.btn-primary:hover {
+  color: #000;
+}
+.btn-primary:hover svg {
+  stroke: #000;
+  fill: #000;
+}
+.btn-primary .btn--text, .btn-primary svg {
+  position: relative;
+  z-index: 1;
+}
+.btn-primary:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+.btn-secondary {
+  background: var(--secondary-btn-bg);
 }
 .btn-secondary::before {
   position: absolute;
@@ -40,7 +82,7 @@ button {
   inset: 0;
   transform: translateX(-100%);
   opacity: 0; 
-  background: #000000;
+  background: var(--primary-btn-bg);
   z-index: 0;
 }
 .btn-secondary:hover {
@@ -61,8 +103,7 @@ button {
 }
 
 /* ec header */
-
-.ec-header__content {
+.ec_header--content {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -73,28 +114,28 @@ button {
   max-width: 100%;
   height: auto;
 }
-.ec-header__content.justify-center{
+.ec_header--content .justify-center{
   justify-content: center;
 }
-.ec-header__logo {
+.ec_header--logo {
   font-size: 20px
 }
 
 @media (width > 768px ) {
-  .ec-header__mobile--nav{
+  .ec_header--mobile--nav{
     display: none;;
   }
 }
 
 @media (width <= 460px) {
-  .ec-header__cta, .ec-header__message {
+  .ec_header--cta, .ec_header--message {
     display: none;
   }
-  .ec-header__content {
+  ec__header-- {
     justify-content: center;
     position: relative
   }
-  .ec-header__mobile--nav {
+  .ec_header--mobile--nav {
     position: absolute;
     left: 0px
   }
@@ -103,5 +144,24 @@ button {
 /* ec header end */
 
 /* ec custom banner */
-
+.ec_banner {
+  position: relative;
+  overflow: hidden;
+}
+.ec_banner--image {
+  position: absolute;
+  inset: 0; 
+  z-index: -1;
+}
+.ec_banner--image .ec_banner--background{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ec_banner--title {
+  font-size: 70px;
+}
+.ec_banner--description {
+  font-size: 20px;
+}
 /* ec custom banner end */
