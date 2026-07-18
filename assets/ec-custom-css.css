@@ -121,9 +121,30 @@ button {
   font-size: 20px
 }
 
+.ec_header--content-mobile{
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  padding-block: 30px;
+}
+.ec_header--mobile--nav .menu-open  {
+  display: none;
+}
+.ec_header--mobile--nav.is-active svg {
+  display: none;
+}
+.ec_header--mobile--nav.is-active .menu-open {
+  display: block;
+}
+.ec_header--mobile--nav.is-active 
 @media (width > 768px ) {
   .ec_header--mobile--nav{
-    display: none;;
+    display: none;
+  }
+  .ec_header--content-mobile{
+    display: none;
   }
 }
 
@@ -133,11 +154,17 @@ button {
   }
   .ec_header--content {
     justify-content: center;
-    position: relative
+  }
+  .ec_header {
+    position: relative;
   }
   .ec_header--mobile--nav {
     position: absolute;
-    left: 0px
+    left: 0;
+    padding: 10px;
+  }
+  .ec_header--content-mobile.is-active {
+    display: flex;
   }
 }
 

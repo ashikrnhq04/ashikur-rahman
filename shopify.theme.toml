@@ -1,4 +1,9 @@
 [environments.dev]
+theme = "159083102405"
+store = "md-ashikur-rahman-48-teststore"
+store_password = "mdashikurrahman123"
+
+[environments.live]
 theme = "159083167941"
 store = "md-ashikur-rahman-48-teststore"
 store_password = "mdashikurrahman123"
