@@ -1,0 +1,174 @@
+{% comment %}
+  announcement bar with logo, message and cta button
+{% endcomment %}
+
+{% liquid
+  assign blocks = section.blocks
+  assign settings = section.settings
+%}
+
+{{ 'ec-custom-css.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .ec-header {
+      background: {{ settings.background }};
+      padding-block: {{ settings.padding_block }}px;
+  }
+</style>
+
+{% stylesheet %}
+{% endstylesheet %}
+
+<section class="ec-header" id="ec-header-{{ section.id }}">
+  <div class="container page-width">
+    <div class="ec-header__content {% unless blocks.size > 1 %}justify-center{% endunless %}">
+      {% comment %} mobile humberger {% endcomment %}
+
+      <button class="ec-header__mobile--nav">
+        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z" fill="#000000"/>
+          <path d="M2 12C2 11.4477 2.44772 11 3 11H21C21.5523 11 22 11.4477 22 12C22 12.5523 21.5523 13 21 13H3C2.44772 13 2 12.5523 2 12Z" fill="#000000"/>
+          <path d="M3 17C2.44772 17 2 17.4477 2 18C2 18.5523 2.44772 19 3 19H21C21.5523 19 22 18.5523 22 18C22 17.4477 21.5523 17 21 17H3Z" fill="#000000"/>
+        </svg>
+      </button>
+
+      {% if blocks.size > 0 %}
+        {% for block in blocks %}
+          {% if block.type == 'ec_logo' %}
+            {% if block.settings.logo != blank %}
+              <div class="ec-header__logo" style="width: {{ block.settings.logo_width }}px">
+                {{ block.settings.logo | image_url: width: 200 | image_tag: class: 'image-fluid' }}
+              </div>
+            {% else %}
+              <div class="ec-header__logo">
+                {{ shop.name }}
+              </div>
+            {% endif %}
+          {% endif %}
+          {% if block.type == 'ec_message' %}
+            <div class="ec-header__message">
+              {{ block.settings.message }}
+            </div>
+          {% endif %}
+          {% if block.type == 'ec_cta' %}
+            <div class="ec-header__cta">
+              {% if block.settings.url != blank %}
+                <a class="btn btn-secondary" href="{{ block.settings.url }}">
+                  <span class="btn--text">
+                    {{ block.settings.url_text }}
+                  </span>
+                  {% if block.settings.btn_icon != blank %}
+                    {{ block.settings.btn_icon }}
+                  {% endif %}
+                </a>
+              {% endif %}
+            </div>
+          {%- endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EC Announcement Bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "UI Settings"
+    },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Background Color",
+      "default": "#F5F5F5"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Padding Block",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 4
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "ec_logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Select a Logo"
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "label": "Logo Width",
+          "info": "180x60px is ideal",
+          "min": 60,
+          "max": 200,
+          "default": 60,
+          "step": 20
+        }
+      ]
+    },
+    {
+      "type": "ec_message",
+      "name": "message",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "message",
+          "label": "Write Announcement",
+          "default": "<p>Find the ideal gift for your loved ones.</p>"
+        }
+      ]
+    },
+    {
+      "type": "ec_cta",
+      "name": "CTA",
+      "settings": [
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Select URL",
+          "default": "/"
+        },
+        {
+          "type": "textarea",
+          "id": "btn_icon",
+          "label": "Button Icon",
+          "info": "Paste icon SVG code"
+        },
+        {
+          "type": "text",
+          "id": "url_text",
+          "label": "URL Text",
+          "default": "choose gift"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EC Accnouncement Bar",
+      "blocks": [
+        {
+          "type": "ec_logo"
+        },
+        {
+          "type": "ec_message"
+        },
+        {
+          "type": "ec_cta"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

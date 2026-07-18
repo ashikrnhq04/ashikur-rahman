@@ -1,4 +1,4 @@
-[environments.development]
-store = "md-ashikur-rahman-48-teststore.myshopify.com"
-theme = "185108922479"
-password = "mdashikurrahman123"
+[environments.dev]
+theme = "159083167941"
+store = "md-ashikur-rahman-48-teststore"
+store_password = "mdashikurrahman123"

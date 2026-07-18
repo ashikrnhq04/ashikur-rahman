@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding:0;
+}
+button {
+  background: none;
+  border: none;
+  padding: 0; 
+  margin: 0;
+  cursor: pointer;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 30px;
+  border: none;
+  text-decoration: none;
+  color: #000000;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.btn svg {
+  max-width: 25px;
+  flex-shrink: 0;
+}
+.btn-secondary {
+  background: #fff544;
+  position: relative;
+  transition: all 500ms;
+}
+.btn-secondary::before {
+  position: absolute;
+  transition: all 500ms;
+  content:  "";
+  inset: 0;
+  transform: translateX(-100%);
+  opacity: 0; 
+  background: #000000;
+  z-index: 0;
+}
+.btn-secondary:hover {
+  background: transparent;
+  color: #fff;
+}
+.btn-secondary:hover svg {
+  stroke: #fff;
+}
+.btn-secondary .btn--text, .btn-secondary svg {
+  position: relative;
+  z-index: 1;
+}
+.btn-secondary:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ec header */
+
+.ec-header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.image-fluid {
+  max-width: 100%;
+  height: auto;
+}
+.ec-header__content.justify-center{
+  justify-content: center;
+}
+.ec-header__logo {
+  font-size: 20px
+}
+
+@media (width > 768px ) {
+  .ec-header__mobile--nav{
+    display: none;;
+  }
+}
+
+@media (width <= 460px) {
+  .ec-header__cta, .ec-header__message {
+    display: none;
+  }
+  .ec-header__content {
+    justify-content: center;
+    position: relative
+  }
+  .ec-header__mobile--nav {
+    position: absolute;
+    left: 0px
+  }
+}
+
+/* ec header end */
+
+/* ec custom banner */
+
+/* ec custom banner end */
