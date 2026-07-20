@@ -1,0 +1,246 @@
+{% liquid
+  assign settings = section.settings
+  assign upsell_product = settings.upsell_product
+%}
+
+{{ 'ec-custom-css.css' | asset_url | stylesheet_tag }}\
+
+<style>
+  .ec_spotlight-products {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+  }
+</style>
+
+<script>
+  {% if upsell_product != blank %}
+      window.upsellProduct = {{ upsell_product.handle
+    | json }};
+      console.log(window.upsellProduct);
+  {% endif %}
+</script>
+
+<section class="ec_spotlight-products" id="ec_spotlight-{{ section.id }}">
+  <div class="container page-width">
+    <div class="ec_spotlight--header">
+      {% if settings.title != blank %}
+        <h2 class="ec_spotlight--section-title">{{ settings.title | strip_html }}</h2>
+      {% endif %}
+    </div>
+    {% if section.blocks.size > 0 %}
+      <div class="ec_spotlight-products--grid">
+        {% for block in section.blocks %}
+          {% liquid
+            assign product = block.settings.product
+            assign title = product.title
+            assign description = product.description
+            assign variants = product.variants
+            assign price = product.price
+            assign featured_image = product.featured_image
+          %}
+          <div class="ec_spotlight-product--card" data-cardid="{{ product.id }}">
+            {% if featured_image != null %}
+              <img
+                src="{{ featured_image | image_url: width: 600 }}"
+                class="ec_spotlight-product--image fluid-image"
+                alt="{{ title }}"
+                loading="lazy"
+              />
+            {% endif %}
+            <button
+              class="ec_spotlight--btn"
+              style="left: {{ block.settings.positionX }}%; top: {{ block.settings.positionY }}%"
+            >
+              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12H18M12 6V18" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="ec_spotlight-product--modal" data-modalid="{{ product.id }}">
+            <script type="text/json" class="ec_product-variants-json">
+              {{ variants | json }}
+            </script>
+            <div class="ec_spotlight-product--info_wrapper">
+              <div class="ec_spotlight-modal--header">
+                <button class="ec_spotlight-modal_close--btn">
+                  <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="ec_spotlight-product--info">
+                <div class="ec_spotlight-product--info_image">
+                  {% if featured_image != null %}
+                    <img
+                      src="{{ featured_image | image_url: width: 300 }}"
+                      class="ec_spotlight-product--image fluid-image"
+                      alt="{{ title }}"
+                      loading="lazy"
+                    />
+                  {% endif %}
+                </div>
+                <div class="ec_spotlight-product_data product_info">
+                  <h2 class="product_info--title">{{ title | escape }}</h2>
+                  <div class="product_info--price">{{ price | money }}</div>
+                  <div class="product_info--description">{{ description }}</div>
+                </div>
+              </div>
+              {% comment %} product form data {% endcomment %}
+              <div class="ec_spotlight-product--form">
+                {% for option in product.options_with_values %}
+                  {% liquid
+                    assign option_name = option.name | downcase
+                  %}
+                  {% if option_name == 'color' %}
+                    <div class="ec_spotlight-products--color-variant">
+                      <div class="option_label">{{ option_name | capitalize }}</div>
+                      <div class="color_variant--container">
+                        {% for name in option.values %}
+                          {% liquid
+                            assign variant_name = name
+                            assign variant_color = name | downcase
+                          %}
+                          <button
+                            data-value="{{ variant_name }}"
+                            class="variant-selector-btn btn"
+                            style="--variant-color: {{ variant_color }}"
+                          >
+                            <div class="swatch" style="background: var(--variant-color)">
+                              <span class="hidden swatch-color"></span>
+                            </div>
+                            {{ name }}
+                          </button>
+                        {%- endfor %}
+                      </div>
+                    </div>
+                  {% else %}
+                    {% if option.values.size > 0 %}
+                      <div class="ec_spotlight-dropdown">
+                        <div class="variant-label">{{ option.name }}</div>
+                        <div class="ec_spotlight-dropdown-header">
+                          <span class="ec_spotlight-dropdown--palceholder"
+                            >Choose your {{ option.name | downcase -}}
+                          </span>
+                          <div class="ec_spotlight-dropdown-icon">
+                            <svg
+                              width="20px"
+                              height="20px"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </div>
+                        </div>
+
+                        <ul class="ec_spotlight-dropdown-list">
+                          {% for name in option.values %}
+                            <li
+                              class="ec_spotlight-dropdown-item"
+                              data-value="{{ name }}"
+                              data-index="{{ forloop.index  }}"
+                            >
+                              {{ name }}
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                <div class="ec_spotlight-product--form--error"></div>
+                <div class="ec_spotlight-product--form--success"></div>
+                {% comment %} add to cart {% endcomment %}
+                <button class="btn add-to-cart-btn">
+                  <span class="btn-text">add to cart</span>
+                  <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+              {% comment %} product form data end {% endcomment %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="ec_spotlight-products--grid">
+        {% for item in (1..6) %}
+          <div class="ec_spotlight-product--card">
+            {{ 'product-apparel-3' | placeholder_svg_tag: 'ec_spotlight-product--image fluid-image' }}
+            <button
+              class="ec_spotlight--btn"
+              style="left: 10%; top: 30%"
+            >
+              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12H18M12 6V18" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script src="{{ 'ec-custom-script.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "EC Spotlight Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Tisso vison in the wild"
+    },
+    {
+      "type": "product",
+      "id": "upsell_product",
+      "label": "Select a Product",
+      "info": "This product will be used to upsell"
+    }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "spotlight_products",
+      "name": "Spotlight Products",
+      "settings": [
+        {
+          "type": "product",
+          "label": "Select a Product",
+          "id": "product"
+        },
+        {
+          "type": "header",
+          "content": "Spotlight Position"
+        },
+        {
+          "type": "range",
+          "id": "positionX",
+          "label": "X Axis",
+          "min": 0,
+          "max": 100,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "positionY",
+          "label": "Y Axis",
+          "min": 0,
+          "max": 100,
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EC Spotlight Products"
+    }
+  ]
+}
+{% endschema %}
