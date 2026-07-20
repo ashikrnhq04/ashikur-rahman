@@ -74,7 +74,6 @@ function spotlightProductsInit() {
             const dropDownHeaders = container.querySelectorAll(".ec_spotlight-dropdown-header")
 
 
-
             dropDownHeaders.forEach(ddElem => {
                 ddElem.addEventListener('click', function () {
                     ddElem.closest(".ec_spotlight-dropdown").classList.toggle("is-open");
@@ -137,12 +136,14 @@ function spotlightProductsInit() {
                 function updateButton(btn) {
                     btnClassRemove();
                     btn.classList.add("selected");
-                    // btn.closest(".color_variant--container").querySelector("input.hidden").value = btn.dataset.value;
+
+                    // calculate the position of button from its container 
                     const offsetHeight = btn.offsetHeight;
                     const offsetLeft = btn.offsetLeft;
                     const offsetWidth = btn.offsetWidth;
                     const offsetTop = btn.offsetTop;
 
+                    // set the position in container 
                     container.style.setProperty('--ec-width', `${offsetWidth}px`);
                     container.style.setProperty('--ec-height', `${offsetHeight}px`);
                     container.style.setProperty('--ec-left', `${offsetLeft}px`);
@@ -168,19 +169,25 @@ function spotlightProductsInit() {
 
             spmodal.forEach(modal => {
 
+
+
                 const addToCartBtn = modal.querySelector(".add-to-cart-btn");
 
                 const addToCartBtnTextElm = addToCartBtn.querySelector(".btn-text");
 
                 const btnDefaultText = addToCartBtn.textContent;
 
+                // grab the product variant from json stored in spotlight ec-spotlight-products
+
                 const variantJSON = modal.querySelector(".ec_product-variants-json").textContent;
 
                 const variants = JSON.parse(decodeURIComponent(variantJSON));
 
+
                 const errorElm = modal.querySelector(".ec_spotlight-product--form--error");
 
                 const successElm = modal.querySelector(".ec_spotlight-product--form--success");
+
 
                 function showError(errorStr) {
 
@@ -208,11 +215,16 @@ function spotlightProductsInit() {
 
 
                     successElm.textContent = "";
+
                     addToCartBtnTextElm.textContent = "Adding...";
+
                     addToCartBtn.disabled = true;
 
+                    // grab all the nodes with selected class
                     const selectedOptions = modal.querySelectorAll(".variant-selector-btn.selected, .ec_spotlight-dropdown-item.selected");
 
+
+                    // extract data
                     const optionValues = Array.from(selectedOptions, (Node) => Node.dataset.value);
 
                     const matchesVariant = variants.find(variant => {
@@ -240,6 +252,7 @@ function spotlightProductsInit() {
                         ]
                     }
 
+
                     if (cartElement) {
 
                         itemsToCart.sections = cartElement.getSectionsToRender().map(s => s.id).join(",");
@@ -258,19 +271,24 @@ function spotlightProductsInit() {
 
                     function submitCart() {
                         fetch(window.Shopify.routes.root + 'cart/add.js', {
+
                             method: 'POST',
+
                             headers: {
                                 'X-Requested-With': "XMLHttpRequest",
                                 "Content-Type": "application/json"
                             },
+
                             body: JSON.stringify(itemsToCart)
+
                         }).then(res => res.json()
                         ).then(response => {
 
                             if (response.status && response.status !== 200) {
                                 showError("Adding to cart failed!");
                             }
-                            console.log(response);
+
+                            // satisfy dawn cart element with single variant data
 
                             if (response.items?.length > 0) {
                                 response.id = response.items[0].id;
@@ -281,11 +299,9 @@ function spotlightProductsInit() {
                                 cartElement.renderContents(response);
                             }
 
-
                             successElm.textContent = "Success"
 
                             addToCartBtnTextElm.textContent = btnDefaultText;
-
 
                         }).catch((error) => {
 
@@ -293,14 +309,19 @@ function spotlightProductsInit() {
                             console.log(error);
 
                         }).finally(() => {
+
                             addToCartBtn.disabled = false;
+
+                            // clear the success message 
                             return setTimeout(() => {
                                 successElm.textContent = ""
                             }, 2000);
+
                         });
                     }
 
 
+                    // upsell product logic
                     if (matchesVariant) {
                         const conditonFound = matchesVariant.options.some(val => val.toLowerCase() == 'black') && matchesVariant.options.some(val => val.toLowerCase() == 'm');
 
@@ -308,20 +329,21 @@ function spotlightProductsInit() {
                             fetch(window.Shopify.routes.root + `products/${window.upsellProduct}.js`)
                                 .then(res => res.json())
                                 .then(product => {
+
                                     if (product && product.variants.length > 0) {
                                         itemsToCart.items.push({ id: product.variants[0].id, quantity: 1 });
                                     }
+
                                     submitCart()
                                 }).catch(err => console.log(err));
 
                         } else {
+
                             submitCart();
+
                         }
                     }
-
-
                 })
-
 
             })
 

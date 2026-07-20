@@ -38,11 +38,30 @@
     width: {{ settings.content_width }}px;
 
    }
+   @media (width <= 460px) {
+     .ec_banner .container {
+       max-height: 600px;
+     }
+   }
 </style>
 <section class="ec_banner" id="ec-banner-{{ section.id }}">
   <div class="ec_banner--image">
     {% if settings.banner_bg != blank %}
-      {{ settings.banner_bg | image_url: width: 1200 | image_tag: class: 'ec_banner--background' }}
+      {%- assign image = settings.banner_bg -%}
+      <img
+        src="{{ image | image_url: width: 1200 }}"
+        alt="{{ image.alt | default: 'banner' }}"
+        width="{{ image.width | default: 1200 }}"
+        height="{{ image.height | default: 1200 }}"
+        srcset="
+          {{ image | image_url: width: 2400 | strip | append: ' 2400w, ' }} |
+          {{ image | image_url: width: 1200 | strip | append: ' 1200w, ' }} |
+          {{ image | image_url: width: 600 | strip | append: ' 600w, ' }} |
+          {{ image | image_url: width: 300 | strip | append: ' 300w, ' }}
+        "
+        loading="lazy"
+        class="ec_banner--background"
+      >
     {% else %}
       {{ 'hero-apparel-1' | placeholder_svg_tag: 'ec_banner--background' }}
     {% endif %}

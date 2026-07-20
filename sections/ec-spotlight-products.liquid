@@ -43,6 +43,8 @@
               <img
                 src="{{ featured_image | image_url: width: 600 }}"
                 class="ec_spotlight-product--image fluid-image"
+                sizes="(max-width: 1024px) 50vw, 33vw"
+                srcset="{{ featured_image | image_url: width: 300 }} 300w, {{ featured_image | image_url: width: 600 }} 600w, {{ featured_image | image_url: width: 1000 }} 1000w, {{ featured_image | image_url: width: 1500 }} 1500w"
                 alt="{{ title }}"
                 loading="lazy"
               />
