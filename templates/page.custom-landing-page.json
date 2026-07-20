@@ -11,13 +11,134 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "ec_announcement_bar_n9JdGT": {
+      "type": "ec-announcement-bar",
+      "blocks": {
+        "ec_logo_Ucmm3K": {
+          "type": "ec_logo",
+          "settings": {
+            "logo": "shopify://shop_images/Group_1000007777.png",
+            "logo_width": 120
+          }
+        },
+        "ec_message_Axbk3N": {
+          "type": "ec_message",
+          "settings": {
+            "message": "<p>Find the ideal gift for your loved ones.</p>"
+          }
+        },
+        "ec_cta_PWy9bb": {
+          "type": "ec_cta",
+          "settings": {
+            "url": "/",
+            "btn_icon": "",
+            "url_text": "choose gift"
+          }
+        }
+      },
+      "block_order": [
+        "ec_logo_Ucmm3K",
+        "ec_message_Axbk3N",
+        "ec_cta_PWy9bb"
+      ],
+      "name": "EC Accnouncement Bar",
+      "settings": {
+        "background": "#F5F5F5",
+        "padding_block": 4
+      }
+    },
+    "ec_banner_BPNQby": {
+      "type": "ec-banner",
+      "blocks": {
+        "banner_title_U4w7Yt": {
+          "type": "banner_title",
+          "settings": {
+            "title": "The Gift Guide"
+          }
+        },
+        "banner_description_fCyh3p": {
+          "type": "banner_description",
+          "settings": {
+            "description": "<p>Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>"
+          }
+        },
+        "banner_cta_FEgHQH": {
+          "type": "banner_cta",
+          "settings": {
+            "url": "shopify://collections",
+            "cta_icon": "",
+            "text": "shop now",
+            "cta_type": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "banner_title_U4w7Yt",
+        "banner_description_fCyh3p",
+        "banner_cta_FEgHQH"
+      ],
+      "name": "EC Banner",
+      "settings": {
+        "content_width": 400,
+        "content_position": "bottom-left"
+      }
+    },
+    "ec_announcement_bar_HhiMEM": {
+      "type": "ec-announcement-bar",
+      "blocks": {
+        "ec_logo_iiwAHa": {
+          "type": "ec_logo",
+          "settings": {
+            "logo": "shopify://shop_images/Group_1000007777.png",
+            "logo_width": 140
+          }
+        },
+        "ec_message_HmFtia": {
+          "type": "ec_message",
+          "settings": {
+            "message": "<p>Find the ideal gift for your loved ones.</p>"
+          }
+        },
+        "ec_cta_68GJBm": {
+          "type": "ec_cta",
+          "settings": {
+            "url": "/",
+            "btn_icon": "<svg width=\"27\" height=\"12\" viewbox=\"0 0 27 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                    <path d=\"M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z\" fill=\"currentColor\"></path>\n                  </svg>",
+            "url_text": "choose gift"
+          }
+        }
+      },
+      "block_order": [
+        "ec_logo_iiwAHa",
+        "ec_message_HmFtia",
+        "ec_cta_68GJBm"
+      ],
+      "name": "EC Accnouncement Bar",
+      "settings": {
+        "background": "#F5F5F5",
+        "padding_block": 4
+      }
+    },
+    "ec_spotlight_products_Gxf7tj": {
+      "type": "ec-spotlight-products",
+      "name": "EC Spotlight Products",
+      "settings": {
+        "title": "Tisso vison in the wild",
+        "upsell_product": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "ec_announcement_bar_n9JdGT",
+    "ec_banner_BPNQby",
+    "ec_announcement_bar_HhiMEM",
+    "ec_spotlight_products_Gxf7tj"
   ]
 }
