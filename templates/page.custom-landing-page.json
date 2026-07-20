@@ -110,10 +110,68 @@
     },
     "ec_spotlight_products_Gxf7tj": {
       "type": "ec-spotlight-products",
+      "blocks": {
+        "spotlight_products_3drEzm": {
+          "type": "spotlight_products",
+          "settings": {
+            "product": "classic-varsity-top",
+            "positionX": 46,
+            "positionY": 20
+          }
+        },
+        "spotlight_products_zCTQAB": {
+          "type": "spotlight_products",
+          "settings": {
+            "product": "dark-denim-top",
+            "positionX": 40,
+            "positionY": 20
+          }
+        },
+        "spotlight_products_8cLCgx": {
+          "type": "spotlight_products",
+          "settings": {
+            "product": "floral-white-top",
+            "positionX": 22,
+            "positionY": 60
+          }
+        },
+        "spotlight_products_WAegmw": {
+          "type": "spotlight_products",
+          "settings": {
+            "product": "black-leather-bag",
+            "positionX": 35,
+            "positionY": 63
+          }
+        },
+        "spotlight_products_EHxwUt": {
+          "type": "spotlight_products",
+          "settings": {
+            "product": "blue-silk-tuxedo",
+            "positionX": 43,
+            "positionY": 79
+          }
+        },
+        "spotlight_products_MyxjEH": {
+          "type": "spotlight_products",
+          "settings": {
+            "product": "chequered-red-shirt",
+            "positionX": 43,
+            "positionY": 26
+          }
+        }
+      },
+      "block_order": [
+        "spotlight_products_3drEzm",
+        "spotlight_products_zCTQAB",
+        "spotlight_products_8cLCgx",
+        "spotlight_products_WAegmw",
+        "spotlight_products_EHxwUt",
+        "spotlight_products_MyxjEH"
+      ],
       "name": "EC Spotlight Products",
       "settings": {
         "title": "Tisso vison in the wild",
-        "upsell_product": ""
+        "upsell_product": "dark-winter-jacket"
       }
     }
   },
