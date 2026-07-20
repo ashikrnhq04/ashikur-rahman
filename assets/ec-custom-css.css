@@ -150,6 +150,9 @@ button {
 
 @media (width <= 460px) {
   .ec_header--cta, .ec_header--message {
+    text-align: center;
+  }
+  .ec_header--cta, .ec_header--message:not(.only_message) {
     display: none;
   }
   .ec_header--content {
