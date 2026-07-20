@@ -103,6 +103,9 @@
       "block_order": [
         "ec_message_HmFtia"
       ],
+      "custom_css": [
+        ".ec_header--message {text-align: center;}"
+      ],
       "name": "EC Accnouncement Bar",
       "settings": {
         "background": "#f5f5f5",
