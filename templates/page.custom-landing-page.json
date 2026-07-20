@@ -49,8 +49,8 @@
       ],
       "name": "EC Accnouncement Bar",
       "settings": {
-        "background": "#F5F5F5",
-        "padding_block": 4
+        "background": "#f5f5f5",
+        "padding_block": 2
       }
     },
     "ec_banner_BPNQby": {
@@ -104,7 +104,7 @@
       ],
       "name": "EC Accnouncement Bar",
       "settings": {
-        "background": "#F5F5F5",
+        "background": "#f5f5f5",
         "padding_block": 20
       }
     },
