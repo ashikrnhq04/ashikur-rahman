@@ -104,7 +104,7 @@
         "ec_message_HmFtia"
       ],
       "custom_css": [
-        ".ec_header--message {text-align: center;}"
+        ".ec_header--content {justify-content: center;}"
       ],
       "name": "EC Accnouncement Bar",
       "settings": {
